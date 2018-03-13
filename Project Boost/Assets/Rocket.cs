@@ -23,7 +23,24 @@ public class Rocket : MonoBehaviour {
 
 	}
 
-	private void Rotate()
+    private void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Friendly":
+                print("Save");
+                break;
+
+            case "Unfriendly":
+                print("Die");
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void Rotate()
     {
         rigidbody.freezeRotation = true;
         float rotationthisframe = rcktthrust * Time.deltaTime;
