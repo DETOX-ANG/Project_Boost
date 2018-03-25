@@ -6,25 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour {
 
-    [SerializeField] float rcktthrust = 100f;
-    [SerializeField] float thrust = 100f;
-    Rigidbody rigidbody;
+    [SerializeField] float rotationRocket = 100f; // Controle de força de rota
+    [SerializeField] float thrust = 100f; //
+    [SerializeField] AudioClip aliveSound;
+    [SerializeField] AudioClip sucess;
+    [SerializeField] AudioClip deathSound;
+
+    Rigidbody rigidbody;//Classe de controle de physis
     AudioSource audiosource;
-    enum State { Alive, Dead, Transitioning}
+    enum State { Alive, Dead, Transitioning}// Enum para controle de estados
     State state = State.Alive;
+
 
     // Use this for initialization
 	void Start () {
         rigidbody = GetComponent<Rigidbody>();
-        audiosource = GetComponent<AudioSource>();
+        audiosource = GetComponent<AudioSource>();// Componente de Audio. Localiza todos os componentes de forma genérica.
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (state == State.Alive)
         {
-            Thrust();
-            Rotate();
+            Thrust();//Lança o Foguete
+            Rotate();//Rotaciona o Foguete
         }
 	}
 
@@ -42,10 +47,13 @@ public class Rocket : MonoBehaviour {
 
             case "Finish":
                 state = State.Transitioning;
+                audiosource.PlayOneShot(sucess);
                 Invoke("LoadNextScene", 1f);
                 break;
 
             case "Untagged":
+                state = State.Dead;
+                audiosource.PlayOneShot(deathSound);
                 print("Die");
                 Invoke("LoadPreviousScene", 1f);
                 break;
@@ -68,7 +76,7 @@ public class Rocket : MonoBehaviour {
     private void Rotate()
     {
         rigidbody.freezeRotation = true;
-        float rotationthisframe = rcktthrust * Time.deltaTime;
+        float rotationthisframe = rotationRocket * Time.deltaTime;
        if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.forward * rotationthisframe);
@@ -85,16 +93,21 @@ public class Rocket : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidbody.AddRelativeForce(Vector3.up * thrust);
-            if (!audiosource.isPlaying)
-            {
-                audiosource.Play();
-            }
+            ActivateThrust();
 
         }
         else
         {
             audiosource.Stop();
+        }
+    }
+
+    private void ActivateThrust()
+    {
+        rigidbody.AddRelativeForce(Vector3.up * thrust);
+        if (!audiosource.isPlaying)
+        {
+            audiosource.PlayOneShot(aliveSound);
         }
     }
 }

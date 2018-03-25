@@ -309,7 +309,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0b2b484f52ceaa54484f2c2fb58477f6, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -391,8 +391,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58455ec5828e00448a8bf79afb2b2f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rcktthrust: 200
+  rotationRocket: 100
   thrust: 50
+  aliveSound: {fileID: 8300000, guid: b0dc38cb54511e14f932f1d95ecdc7f8, type: 3}
+  sucess: {fileID: 8300000, guid: b9f684f008bc4d14c901862d7c64b076, type: 3}
+  deathSound: {fileID: 8300000, guid: f79799f90080fe542bff70bd3d5bc5f0, type: 3}
 --- !u!136 &136257696058059792
 CapsuleCollider:
   m_ObjectHideFlags: 1
